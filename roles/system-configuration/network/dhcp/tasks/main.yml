@@ -2,7 +2,7 @@
     - name: Install network manager
       become: true
       ansible.builtin.apt:
-        name: network-manager
+        name: NetworkManager
         state: present
 
     - name: Enable & Start Network manager service
