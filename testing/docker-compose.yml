@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  ansible-test:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    init: true
+    image: ansible-test
+    volumes:
+      - type: bind
+        source: ../
+        target: /app/
