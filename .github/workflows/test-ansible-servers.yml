@@ -24,11 +24,12 @@ jobs:
         - name: Set up Docker Buildx
           uses: docker/setup-buildx-action@v2
       
+        - name: Build Docker Image
+          run: docker build -t ansible-test testing/.
+
         - name: Start Docker Container
           run: docker run -d --name ansible-test-instance ansible-test-container
   
-        - name: Build Docker Image
-          run: docker build -t ansible-test testing/.
 
         - name: Wait for Container to Be Up and Running
           run: docker wait ansible-test-instance
