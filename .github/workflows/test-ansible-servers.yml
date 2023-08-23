@@ -6,15 +6,11 @@ on:
       - ".github"
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-
-    steps:
-        - name: Checkout
-          uses: actions/checkout@v3
+  cache-apt-packages:
+        name: Cache APT Packages
+        runs-on: ubuntu-latest
     
+        steps:
         - name: Cache APT Packages
           uses: actions/cache@v2
           with:
@@ -22,6 +18,16 @@ jobs:
             key: apt-packages-{{ runner.os }}-{{ hashFiles('**/apt.yaml') }}
             restore-keys: |
               apt-packages-{{ runner.os }}-
+    
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs: cache-apt-packages  # Make sure this job runs first
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+
               
         - name: Install Ansible
           run: sudo apt-get update && sudo apt-get install -y ansible
@@ -41,7 +47,7 @@ jobs:
             
         - name: Run Tests on built docker image
           run: |
-            ansible-playbook servers/piscrape/playbook.yml --roles_path=roles --inventory "localhost," --extra-vars "container_name=ansible-test-instance"
+            ansible-playbook servers/piscrape/playbook.yml -e "roles_path=roles" --inventory "localhost," --extra-vars "container_name=ansible-test-instance"
         
         - name: Stop and Remove Docker Container
           run: docker stop ansible-test-instance && docker rm ansible-test-instance
