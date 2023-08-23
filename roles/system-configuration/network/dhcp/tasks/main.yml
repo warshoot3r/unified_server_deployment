@@ -2,8 +2,9 @@
     - name: Install network manager
       become: true
       ansible.builtin.apt:
-        name: NetworkManager
+        name: network-manager
         state: present
+        update_cache: yes
 
     - name: Enable & Start Network manager service
       become: true
