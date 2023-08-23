@@ -12,7 +12,7 @@
         name: NetworkManager
         enabled: true
         state: started
-
+      when: not skip_wifi_config_role
 # configure network last incase anciblen loses connection
     - name: Configure network
       become: true
