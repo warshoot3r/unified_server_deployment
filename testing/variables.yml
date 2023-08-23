@@ -1,0 +1,5 @@
+skip_deploy_key_roles: true
+skip_wifi_config_role: true
+github_token: "fdgas" 
+wifi_ssid: "sdfg"
+wifi_password: "rsdfg"
