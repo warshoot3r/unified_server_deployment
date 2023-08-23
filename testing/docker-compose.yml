@@ -8,6 +8,7 @@ networks:
 
 services:
   ansible-test-instance:
+    container_name: ansible-test-instance
     image: ansible-test-instance
     networks:
       my_network:
