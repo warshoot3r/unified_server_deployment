@@ -25,8 +25,8 @@ jobs:
           run: docker build -t ansible-test-instance testing/.
 
         - name: Start Docker Container
-          run: docker run -d --name ansible-test-instance
-  
+          run: docker run -d --name ansible-test-instance ansible-test-instance
+    
 
         - name: Wait for Container to Be Up and Running
           run: docker wait ansible-test-instance
