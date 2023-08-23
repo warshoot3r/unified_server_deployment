@@ -47,7 +47,7 @@ jobs:
             
         - name: Run Tests on built docker image
           run: |
-            EXPORT ANSIBLE_CONFIG="testing/ansible_test.cfg"
+            EXPORT ANSIBLE_CONFIG="testing/ansible_test.cfg" \
             ansible-playbook servers/piscrape/playbook.yml --inventory "localhost," --extra-vars "container_name=ansible-test-instance"
         
         - name: Stop and Remove Docker Container
