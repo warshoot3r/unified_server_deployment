@@ -59,7 +59,7 @@ jobs:
         - name: Run Tests on built docker image
           run: |
             export ANSIBLE_CONFIG="testing/ansible_test.cfg" &&
-            ansible-playbook servers/pi-node1/playbook.yml --inventory "testing/inventory.yml" -e "@variables.yml"
+            ansible-playbook servers/pi-node1/playbook.yml --inventory "testing/inventory.yml" -e "@testing/variables.yml"
         
         - name: Stop and Remove Docker Container
           run: docker stop ansible-test-instance && docker rm ansible-test-instance
