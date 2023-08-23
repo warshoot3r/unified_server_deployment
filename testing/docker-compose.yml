@@ -1,14 +1,14 @@
-version: '3'
+version: '3.8'
+
+networks:
+  my_network:
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
 
 services:
-  ansible-test:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    init: true
-    image: ansible-test
-    volumes:
-      - type: bind
-        source: ../
-        target: /app/
+  my_service:
+    image: ansible-test-instance
+    networks:
+      my_network:
+        ipv4_address: 172.18.0.2
