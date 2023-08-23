@@ -25,7 +25,7 @@ jobs:
               
         - name: Install Ansible
           run: sudo apt-get update && sudo apt-get install -y ansible
-          
+
         - name: Set up Docker Buildx
           uses: docker/setup-buildx-action@v2
       
@@ -33,7 +33,7 @@ jobs:
           run: docker build -t ansible-test-instance testing/.
 
         - name: Start Docker Container
-          run: docker run -d --name docker.io/library/ansible-test-instance ansible-test-instance
+          run: docker run -d ansible-test-instance sh
     
 
         - name: Wait for Container to Be Up and Running
