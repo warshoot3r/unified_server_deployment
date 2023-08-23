@@ -6,7 +6,7 @@
   vars:
     server_hostname: "pi-node1" # Variable for renaming server, github key. 
     server_service_username: "james" # Service account name
-    ansible_user: "james"
+    ansible_user: "root"
     enabled_vlans: # Enabled VLANS
       - VLAN30
       - VLAN70
