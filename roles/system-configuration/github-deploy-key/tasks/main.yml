@@ -1,0 +1,20 @@
+   # A deploy key allows you to pull (or push) from a private GitHub repo
+    - name: Ensure deploy key is present
+      community.crypto.openssh_keypair:
+        path: "~/.ssh/id_github"
+        type: ed25519
+        state: present
+      register: deploy_key
+          # pull github repo for piunifi
+    - name: Print deploy key
+      ansible.builtin.debug:
+        var: deploy_key
+    - name: Push deploy key to Github
+      community.general.github_deploy_key:
+        owner: "warshoot3r"
+        repo: "infraascode"
+        name: "{{ server_hostname }}-Server-Deploy-Key"
+        state: present
+        key: "{{ deploy_key.public_key }}"
+        read_only: true
+        token: "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"

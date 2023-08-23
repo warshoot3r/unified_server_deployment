@@ -1,0 +1,16 @@
+# code: language=ansible
+- hosts: pihole2.local
+  name: Install Pi Hole 2
+  vars:
+    server_hostname: "pihole2" # Variable for renaming server, github key. 
+    server_service_username: "james" # Service account name
+    docker_compose_files:
+      - cloudflared-pihole-docker-compose.yml
+  roles: 
+    - system-configuration/github-deploy-key
+    - system-configuration/use-github-key-for-ssh
+    - cloudflared-pihole-docker-compose.yml
+    - system-configuration/unattended-upgrades
+    - system-configuration/hostname-rename
+    - system-configuration/update/raspi4
+    - system-configuration/network/wifi

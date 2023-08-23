@@ -1,0 +1,19 @@
+
+    # Install Home assistant
+    - name: Install Home assistant Core dependencies
+      become: true
+      ansible.builtin.apt:
+        name: "{{  item }}"
+        state: present
+        update_cache: true
+      loop:
+        - apparmor
+        - jq
+        - wget
+        - curl
+        - udisks2
+        - libglib2.0-bin
+        - network-manager
+        - dbus
+        - lsb-release
+        - systemd-journal-remote

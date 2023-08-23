@@ -1,0 +1,17 @@
+- name: Pull Car Giant scrape project
+  ansible.builtin.git:
+        repo: git@github.com:warshoot3r/cargiantscrape.git
+        dest: "/home/{{ ansible_user }}"
+        clone: true
+        update: true
+        force: true
+        key_file: ~/.ssh/id_github
+        accept_hostkey: true
+        version: latest
+
+- name: Docker compose up the Car Giant project
+  community.general.docker_compose:
+        project_src: "/home/{{ ansible_user }}/cargiantscrape" # Path to your project directory containing the Docker Compose files
+        files:
+              - docker-compose.yml
+        state: present

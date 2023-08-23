@@ -1,0 +1,13 @@
+    # Automatically upgrade apt packages
+    - name: Install unattended upgrades
+      become: true
+      ansible.builtin.apt:
+        name: unattended-upgrades
+        state: present
+    - name: Setup unattended upgrades
+      ansible.builtin.debconf:
+        name: unattended-upgrades
+        question: unattended-upgrades/enable_auto_updates
+        vtype: boolean
+        value: "true"
+

@@ -1,0 +1,33 @@
+
+
+    - name: Check if machine type for homeassistant-supervised debconf is present. If not Add pi4 for Homeassistant installer
+      become: true
+      ansible.builtin.debconf:
+        name: homeassistant-supervised
+        question: ha/machine-type
+        value: 'raspberrypi4-64'
+        vtype: select
+
+
+    # CGGroups 1 and apparmor
+    - name: Enable CGGroupsv1 and apparmor
+      become: true
+      ansible.builtin.replace:
+        path: /boot/cmdline.txt
+        regexp: '^([\w](?!.*\b{{ item }}\b).*)$'
+        replace: '\1 {{ item }}'
+      with_items:
+        - "apparmor=1"
+        - "security=apparmor"
+        - "systemd.unified_cgroup_hierarchy=0"
+        
+    - name: Restart machine
+      become: true
+      ansible.builtin.reboot:
+        msg: Reboot initiated by Ansible
+
+    - name: Install Home assistant deb
+      ansible.builtin.apt:
+        deb: "https://github.com/home-assistant/supervised-installer/releases/latest/download/homeassistant-supervised.deb"
+        state: present
+      become: true

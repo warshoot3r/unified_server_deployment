@@ -1,0 +1,13 @@
+
+    - name: Install OS-agent
+      ansible.builtin.apt:
+        deb: https://github.com/home-assistant/os-agent/releases/download/1.5.1/os-agent_1.5.1_linux_aarch64.deb
+        state: present
+      become: true
+      # changed_when: os_agent_check_deb.rc == 1
+    - name: Check os-agent working properly
+      ansible.builtin.command:
+        cmd: "gdbus introspect --system --dest io.hass.os --object-path /io/hass/os"
+      register: "gdbus"
+      changed_when: gdbus.rc != 0
+      failed_when: gdbus.rc > 1

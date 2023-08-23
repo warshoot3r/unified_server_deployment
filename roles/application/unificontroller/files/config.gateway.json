@@ -1,0 +1,138 @@
+{
+    "firewall": {
+        "modify": {
+            "LOAD_BALANCE": {
+                "description": "LOAD_BALANCE",
+                "rule": {
+                    "2640": {
+                        "action": "modify",
+                        "modify": {
+                            "table": "20"
+                        },
+                        "protocol": "all",
+                        "source": {
+                            "address": "10.10.20.0/24"
+                        }
+                    }
+                }
+            },
+            "PBR": {
+                "rule": {
+                    "10": {
+                        "action": "modify",
+                        "description": "inter-vlan-route",
+                        "destination": {
+                            "group": {
+                                "network-group": "vlans"
+                            }
+                        },
+                        "modify": {
+                            "table": "main"
+                        }
+                    },
+                    "20": {
+                        "action": "modify",
+                        "description": "vlan20",
+                        "modify": {
+                            "table": "20"
+                        },
+                        "protocol": "all",
+                        "source": {
+                            "address": "10.10.20.0/24"
+                        }
+                    }
+                }
+            }
+        },
+        "group": {
+            "network-group": {
+                "vlans": {
+                    "network": [
+                        "10.10.20.0/24",
+                        "192.168.1.0/24",
+                        "10.10.70.0/24",
+                        "10.10.30.0/24"
+                    ]
+                }
+            }
+        }
+    },
+    "protocols": {
+        "static": {
+            "table": {
+                "20": {
+                    "interface-route": {
+                        "0.0.0.0/0": {
+                            "next-hop-interface": {
+                                "eth2.5": "''"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "interfaces": {
+        "ethernet": {
+            "eth1": {
+                "vif": {
+                    "20": {
+                        "address": [
+                            "10.10.20.1/24"
+                        ],
+                        "firewall": {
+                            "in": {
+                                "modify": "PBR",
+                                "name": "LAN_IN"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "service": {
+        "nat": {
+            "rule": {
+
+                "4": {
+                    "description": "Redirect DNS requests to pihole vlan 99",
+                    "destination": {
+                        "port": "53"
+                    },
+                    "inbound-interface": "eth1.99",
+                    "inside-address": {
+                        "address": "192.168.1.70",
+                        "port": "53"
+                    },
+                    "source": {
+                        "address": "!192.168.1.70"
+                    },
+                    "log": "disable",
+                    "disable": "''",
+                    "protocol": "tcp_udp",
+                    "type": "destination"
+                },
+                "5": {
+                    "description": "Redirect DNS requests to pihole vlan 30",
+                    "destination": {
+                        "port": "53"
+                    },
+                    "inbound-interface": "eth1.30",
+                    "inside-address": {
+                        "address": "192.168.1.70",
+                        "port": "53"
+                    },
+                    "source": {
+                        "address": "!192.168.1.70"
+                    },
+                    "log": "disable",
+                    "disable": "''",
+                    "protocol": "tcp_udp",
+                    "type": "destination"
+                }
+
+            }
+        }
+    }
+}

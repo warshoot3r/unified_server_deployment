@@ -1,0 +1,12 @@
+- name: Install Home Assistant Dependencies
+  include_tasks: install-dependencies.yml
+- name: Install patched libhttp
+  include_tasks: libhttp-fix.yml
+- name: Install Supervisor Os Agent
+  include_tasks: install-osagent.yml
+- name: Install Homea Assistant
+  include_tasks: install-homeassistant.yml
+- name: Configure Avahi and Multicast DNS
+  include_tasks: systemd-avahi-config.yml
+- name: Install scheduled tasks for ramfs and git push
+  include_tasks: scheduled-cron-scripts.yml

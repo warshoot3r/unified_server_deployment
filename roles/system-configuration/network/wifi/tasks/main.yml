@@ -1,0 +1,12 @@
+    - name: Create the wifi connection
+      become: true
+      community.general.nmcli:
+        type: wifi
+        conn_name: mainwifi
+        ifname: wlan0
+        ssid: HLSGJH-WiFi
+        wifi_sec:
+          key-mgmt: wpa-psk
+          psk: ri669{asta695thor@
+        autoconnect: true
+        state: present

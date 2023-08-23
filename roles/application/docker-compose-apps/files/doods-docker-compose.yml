@@ -1,0 +1,9 @@
+version: "3"
+
+services: 
+  doods2:
+    container_name: doods2objectdetection
+    restart: unless-stopped
+    image: snowzach/doods2
+    ports:
+     - "8081:8080"
