@@ -1,5 +1,5 @@
 # Use an appropriate base image
-FROM navikey/raspbian-buster
+FROM debian:bullseye-backports
 
 # Install OpenSSH server and create SSH directory
 RUN apt-get update && \
