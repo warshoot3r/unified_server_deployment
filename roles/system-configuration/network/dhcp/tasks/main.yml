@@ -22,7 +22,7 @@
         ifname: eth0
         type: ethernet
         method6: "disabled"
-
+      when: not skip_wifi_config_role
     - name: Create VLAN 20
       become: true
       community.general.nmcli:
@@ -33,9 +33,9 @@
         state: present
         method6: "disabled"
         mac: stable
-      when: item == "VLAN20"
+      when:  (item == "VLAN20") or (not skip_wifi_config_role)
       with_items: "{{ enabled_vlans }}"
-
+      
     - name: Create VLAN 30
       become: true
       community.general.nmcli:
@@ -46,8 +46,8 @@
         state: present
         method6: "disabled"
         mac: stable
-      when: item == "VLAN30"
-      with_items: "{{ enabled_vlans }}"
+      when:  (item == "VLAN30") or (not skip_wifi_config_role)
+      with_items: "{{ enabled_vlans }}" 
 
     - name: Create VLAN 70
       become: true
@@ -59,5 +59,5 @@
         state: present
         method6: "disabled"
         mac: stable
-      when: item == "VLAN70"
-      with_items: "{{ enabled_vlans }}"
+      when:  (item == "VLAN70") or (not skip_wifi_config_role)
+      with_items: "{{ enabled_vlans }}" 
