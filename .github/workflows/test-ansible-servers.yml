@@ -15,9 +15,17 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v3
     
+        - name: Cache APT Packages
+          uses: actions/cache@v2
+          with:
+            path: /var/cache/apt/archives
+            key: apt-packages-{{ runner.os }}-{{ hashFiles('**/apt.yaml') }}
+            restore-keys: |
+              apt-packages-{{ runner.os }}-
+              
         - name: Install Ansible
           run: sudo apt-get update && sudo apt-get install -y ansible
-
+          
         - name: Set up Docker Buildx
           uses: docker/setup-buildx-action@v2
       
