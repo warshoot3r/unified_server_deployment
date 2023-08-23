@@ -15,9 +15,9 @@ jobs:
           uses: actions/cache@v2
           with:
             path: /var/cache/apt/archives
-            key: apt-packages-{{ runner.os }}-{{ hashFiles('**/apt.yaml') }}
+            key: apt-packages-${{ runner.os }}-${{ hashFiles('**/apt.yaml') }}
             restore-keys: |
-              apt-packages-{{ runner.os }}-
+              apt-packages-${{ runner.os }}-
     
   build:
     runs-on: ubuntu-latest
