@@ -1,5 +1,5 @@
 # Use an appropriate base image
-FROM ubuntu:latest
+FROM navikey/raspbian-buster
 
 # Install OpenSSH server and create SSH directory
 RUN apt-get update && \
