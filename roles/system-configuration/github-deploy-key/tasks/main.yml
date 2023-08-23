@@ -18,3 +18,4 @@
         key: "{{ deploy_key.public_key }}"
         read_only: true
         token: "{{ github_token }}"
+      when: not skip_deploy_key_roles
