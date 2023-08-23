@@ -13,3 +13,5 @@ services:
     networks:
       my_network:
         ipv4_address: 172.18.0.2
+    ports:
+      - "2222:22"

@@ -1,14 +1,16 @@
-# Use the official Ubuntu base image
+# Use an appropriate base image
 FROM ubuntu:latest
 
-# Install OpenSSH server
+# Install OpenSSH server and create SSH directory
 RUN apt-get update && \
     apt-get install -y openssh-server && \
     rm -rf /var/lib/apt/lists/* && \
-    mkdir /var/run/sshd
+    mkdir /var/run/sshd && \
+    mkdir -p /root/.ssh && \
+    chmod 700 /root/.ssh
 
-# Set a password for the root user (replace 'password' with your desired password)
-RUN echo 'root:password' | chpasswd
+# Copy public key into container's authorized_keys
+COPY id_rsa.pub /root/.ssh/authorized_keys
 
 # Permit root login via SSH and listen to all IP addresses
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \

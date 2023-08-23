@@ -27,7 +27,10 @@ jobs:
     steps:
         - name: Checkout
           uses: actions/checkout@v3
-
+          
+        - name: Generate SSH key pair
+          run: ssh-keygen -t rsa -b 4096 -f id_rsa -N ""
+  
               
         - name: Install Ansible
           run: sudo apt-get update && sudo apt-get install -y ansible
