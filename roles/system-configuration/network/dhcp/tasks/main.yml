@@ -9,7 +9,7 @@
     - name: Enable & Start Network manager service
       become: true
       ansible.builtin.service:
-        name: NetworkManager
+        name: NetworkManager.service
         enabled: true
         state: started
 
