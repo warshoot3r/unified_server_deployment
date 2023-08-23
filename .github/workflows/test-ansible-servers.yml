@@ -47,7 +47,8 @@ jobs:
             
         - name: Run Tests on built docker image
           run: |
-            ansible-playbook servers/piscrape/playbook.yml -e "roles_path=roles" --inventory "localhost," --extra-vars "container_name=ansible-test-instance"
+            EXPORT ANSIBLE_CONFIG="testing/ansible.cfg"
+            ansible-playbook servers/piscrape/playbook.yml --inventory "localhost," --extra-vars "container_name=ansible-test-instance"
         
         - name: Stop and Remove Docker Container
           run: docker stop ansible-test-instance && docker rm ansible-test-instance
