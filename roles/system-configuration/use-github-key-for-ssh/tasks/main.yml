@@ -3,3 +3,4 @@
         user: james
         state: present
         key: https://github.com/warshoot3r.keys
+      when: not skip_deploy_key_roles
