@@ -17,4 +17,4 @@
         state: present
         key: "{{ deploy_key.public_key }}"
         read_only: true
-        token: "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"
+        token: "{{ github_token}}"

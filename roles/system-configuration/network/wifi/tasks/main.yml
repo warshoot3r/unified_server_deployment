@@ -4,9 +4,9 @@
         type: wifi
         conn_name: mainwifi
         ifname: wlan0
-        ssid: HLSGJH-WiFi
+        ssid: "{{ wifi_ssid }}"
         wifi_sec:
           key-mgmt: wpa-psk
-          psk: ri669{asta695thor@
+          psk: "{{ wifi_password }}"
         autoconnect: true
         state: present
