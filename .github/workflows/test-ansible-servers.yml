@@ -27,9 +27,9 @@ jobs:
     steps:
         - name: Checkout
           uses: actions/checkout@v3
-          
+
         - name: Generate SSH key pair
-          run: ssh-keygen -t rsa -b 4096 -f id_rsa -N ""
+          run: ssh-keygen -t rsa -b 4096 -f testing/id_rsa -N ""
   
               
         - name: Install Ansible
