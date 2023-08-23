@@ -9,7 +9,7 @@
     - name: Enable & Start Network manager service
       become: true
       ansible.builtin.service:
-        name: NetworkManager.service
+        name: "{{ 'network-manager' if ansible_architecture == 'x86_64' else 'NetworkManager' }}"
         enabled: true
         state: started
 
