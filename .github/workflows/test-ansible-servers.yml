@@ -3,7 +3,7 @@ name: "Automatic - Build and push multi tag as branch name"
 on:
   push:
     branches: 
-      - master
+      - $default-branch
     paths-ignore: 
       - ".github"
 
