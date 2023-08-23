@@ -30,7 +30,18 @@ jobs:
 
         - name: Generate SSH key pair
           run: ssh-keygen -t rsa -b 4096 -f testing/id_rsa -N ""
-  
+
+        - name: set up host ssh
+          run: |
+            mkdir -p ~/.ssh
+            cp testing/id_rsa ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            
+        - name: Start SSH agent
+          run: eval "$(ssh-agent -s)"
+    
+        - name: Add SSH key to agent
+          run: ssh-add ~/.ssh/id_rsa
               
         - name: Install Ansible
           run: sudo apt-get update && sudo apt-get install -y ansible
