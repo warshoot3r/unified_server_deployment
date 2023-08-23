@@ -4,3 +4,5 @@ FROM ubuntu:latest
 # Copy your Ansible code into the container
 COPY . /ansible
 WORKDIR /ansible
+
+ENTRYPOINT ["bash"]
