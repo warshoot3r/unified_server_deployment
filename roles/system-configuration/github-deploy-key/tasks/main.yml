@@ -5,10 +5,12 @@
         type: ed25519
         state: present
       register: deploy_key
+      when: not skip_deploy_key_roles
           # pull github repo for piunifi
     - name: Print deploy key
       ansible.builtin.debug:
         var: deploy_key
+      when: not skip_deploy_key_roles
     - name: Push deploy key to Github
       community.general.github_deploy_key:
         owner: "warshoot3r"
