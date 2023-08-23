@@ -8,7 +8,7 @@
       ansible.builtin.apt:
         name: network-manager
         state: present
-        update_cache: yes
+        update_cache: true
 
     - name: Enable & Start Network manager service
       ansible.builtin.service:
@@ -32,7 +32,7 @@
         conn_name: "eth0.{{ item }}"
         vlandev: eth0
         vlanid: "{{ item }}"
-        state: present
+        state: presentgi
         method6: "disabled"
         mac: stable
       when: (item in enabled_vlans) or (not skip_wifi_config_role)
