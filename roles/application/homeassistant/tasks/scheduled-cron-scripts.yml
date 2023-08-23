@@ -1,0 +1,14 @@
+# For consistently remapping a ramfs for camera snapshots
+- name: Copy ha_ramfs_check.sh
+  become: true
+  ansible.builtin.copy:
+    src: cron/ha_ramfs_check.sh
+    dest: /usr/bin/ha_ramfs_check.sh
+    mode: "u+x"
+
+- name: Copy git update script
+  become: true
+  ansible.builtin.copy:
+    src: cron/gitupdate.sh
+    dest: /usr/bin/gitupdate.sh
+    mode: "u+x"

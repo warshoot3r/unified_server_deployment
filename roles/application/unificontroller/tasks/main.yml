@@ -1,0 +1,7 @@
+    - name: Add config.gateway.json to the unifi data folder
+      ansible.builtin.copy:
+        src: config.gateway.json
+        dest: /var/docks/unifi/data/sites/default/config.gateway.json
+        follow: true # overwrite the file. No will change contents
+        mode: preserve
+      become: true

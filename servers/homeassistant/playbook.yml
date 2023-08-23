@@ -1,0 +1,23 @@
+# code: language=ansible
+- hosts: all
+  name: Install Home assistant
+  vars:
+    server_hostname: "hassio" # Variable for renaming server, github key. 
+    server_service_username: "james" # Service account name
+    enabled_vlans: # Enabled VLANS
+      - VLAN20
+      - VLAN30
+      - VLAN70
+    compose_files: # For docker-compose-apps
+      - doods-docker-compose.yml
+  roles: 
+    - system-configuration/github-deploy-key
+    - system-configuration/use-github-key-for-ssh
+    - application/docker
+    - application/homeassistant
+    - application/camera-streamer
+    - system-configuration/unattended-upgrades
+    - system-configuration/network/dhcp
+    - system-configuration/hostname-rename
+    - system-configuration/update/raspi4
+    - applications/docker-compose-apps

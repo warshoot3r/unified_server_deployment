@@ -1,0 +1,70 @@
+    - name: Install docker dependencies
+      become: true
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: true
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+        - lsb-release
+
+    - name: Add Docker GPG key
+      become: true
+      ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/raspbian/gpg
+        keyring: /usr/share/keyrings/docker-archive-keyring.gpg
+        state: present
+
+    - name: Get OS release name
+      ansible.builtin.command: "lsb_release -cs"
+      changed_when: false
+      register: lsb_rel
+
+    - name: Get linux system arch
+      changed_when: false
+      ansible.builtin.command: dpkg --print-architecture
+      register: sys_arch
+
+    - name: Add docker repository to apt
+      become: true
+      ansible.builtin.apt_repository:
+        repo: >-
+         deb [arch={{ sys_arch.stdout }}
+         signed-by=/usr/share/keyrings/docker-archive-keyring.gpg]
+         https://download.docker.com/linux/raspbian {{ lsb_rel.stdout }}
+         stable
+        state: present
+
+    - name: Run apt update
+      become: true
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Install docker
+      become: true
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-compose
+
+    - name: Add user to docker group
+      become: true
+      ansible.builtin.user:
+        name: "{{ server_service_username }}"
+        groups: docker
+        append: true
+
+
+    - name: Enable & Start Docker service
+      become: true
+      ansible.builtin.service:
+        name: docker
+        enabled: true
+        state: started

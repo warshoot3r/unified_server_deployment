@@ -1,0 +1,9 @@
+[Unit]
+Description=Run enable printers frequently to ensure connection difficulties are remedied.
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=300
+
+[Install]
+WantedBy = timers.target

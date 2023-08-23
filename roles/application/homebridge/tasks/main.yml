@@ -1,0 +1,37 @@
+     ## configure homebridge
+
+    - name: Add homebridge GPG key
+      become: true
+      ansible.builtin.apt_key:
+        url: https://repo.homebridge.io/KEY.gpg
+        keyring: /usr/share/keyrings/homebridge.gpg
+        state: present
+
+
+    - name: Add docker repository to apt
+      become: true
+      ansible.builtin.apt_repository:
+        repo: deb [signed-by=/usr/share/keyrings/homebridge.gpg] https://repo.homebridge.io stable main
+        state: present
+
+    - name: Apt update
+      become: true
+      ansible.builtin.apt:
+        update_cache: true
+    - name: Install homebridge
+      become: true
+      ansible.builtin.apt:
+        update_cache: true
+        name: "{{ item }}"
+      loop:
+        - homebridge
+        - cec-utils
+        - avahi-daemon
+        - ffmpeg
+        - bmon # for packet analysis
+    - name: Start homebridge
+      become: true
+      ansible.builtin.service:
+        name: homebridge
+        state: started
+        enabled: true

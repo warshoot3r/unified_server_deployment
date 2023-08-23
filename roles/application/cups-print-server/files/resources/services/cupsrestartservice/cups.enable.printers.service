@@ -1,0 +1,9 @@
+[Unit]
+Description = Forcibly enable printer occassionally. Why CUPS disables printers in the first place has yet to be determined.
+
+[Service]
+Type = simple
+ExecStart = /usr/local/cups/enable_cups_printers.sh
+
+[Install]
+WantedBy = multi-user.wants

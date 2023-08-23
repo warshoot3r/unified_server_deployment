@@ -1,0 +1,35 @@
+
+- pre_tasks:
+    - name: Switch to rw mode
+      ansible.builtin.command: rw
+      changed_when: false
+      vars:
+        ansible_remote_tmp: /tmp/ansible
+  name: Update and Upgrade all packages then restart
+  block:
+    - name: Gather facts
+      ansible.builtin.gather_facts:
+        parallel: true
+
+    - name: Update Repo
+      community.general.pacman:
+        state: latest
+        update_cache: true
+
+    - name: Upgrade all packages
+      community.general.pacman:
+        state: latest
+        upgrade: true
+
+    - name: Restart
+      become: true
+      ansible.builtin.reboot:
+        reboot_timeout: 30
+        test_command: uptime
+
+  post_tasks:
+    - name: Set Read Only FS
+      become: true
+      ansible.builtin.command:
+        cmd: ro
+      changed_when: false

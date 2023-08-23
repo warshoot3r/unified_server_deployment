@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  unifi:
+    container_name: unificontroller
+    restart: unless-stopped
+    image: jacobalberty/unifi
+    network_mode: host
+    volumes:
+      - /var/docks/unifi:/unifi 
+    environment:
+      TZ: 'Europe/London'     
+      RUNAS_UID0: "false" 
+      UNIFI_UID: 1001    
+      LOTSOFDEVICES: "true"
+      UNIFI_GID: 1001

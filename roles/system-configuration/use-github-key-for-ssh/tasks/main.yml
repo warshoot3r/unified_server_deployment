@@ -1,0 +1,5 @@
+    - name: Ensure SSH Key is authorized
+      ansible.posix.authorized_key:
+        user: james
+        state: present
+        key: https://github.com/warshoot3r.keys

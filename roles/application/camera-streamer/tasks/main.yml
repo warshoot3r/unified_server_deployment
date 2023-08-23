@@ -1,0 +1,25 @@
+# Install python camera streamer
+    - name: Copy Camera Streamer files
+      ansible.builtin.copy:
+        src: camera-streamer
+        dst: /tmp/camera-streamer
+        recurse: true
+
+    - name: Install Camera streamer
+      become: true
+      ansible.builtin.apt:
+        deb: /tmp/camera-streamer/camera-streamer-raspi_0.2.1.bullseye_arm64.deb
+      
+    - name: Copy service file
+      become: true
+      ansible.builtin.file:
+        path: /tmp/camera-streamer/camera-streamer.service
+        dest: /etc/systemd/system/
+        mode: "774"
+  
+    - name: Enable Service and start
+      become: true
+      ansible.builtin.service:
+        name: camera-streamer
+        state: started
+        enabled: true

@@ -1,0 +1,15 @@
+
+- name: Copy Docker Compose files to server
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files"
+    dest: "/home/{{ ansible_user }}"
+    mode: "0644"
+
+
+- name: Combine Docker Compose files
+  community.general.docker_compose:
+        project_src: "/home/{{ ansible_user }}" # Path to your project directory containing the Docker Compose files
+        files:
+          - "{{ compose_files }}"
+        state: present
+        when: compose_files | length > 0

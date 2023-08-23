@@ -1,0 +1,96 @@
+
+    - name: Set up avahi
+      become: true
+      ansible.builtin.apt:
+        name: avahi-daemon
+        state: present
+
+    - name: Enable and start avahi avahi-daemon
+      become: true
+      ansible.builtin.service:
+        name: avahi-daemon
+        enabled: true
+        state: started
+
+#  set up cups
+    - name: Install cups
+      become: true
+      ansible.builtin.apt:
+        name: cups
+        state: present
+
+#  Copy cups configuration
+    - name: Copy cups config to server
+      become: true
+      ansible.builtin.copy:
+        src: resources/cups/
+        dest: /etc/cups/
+        mode: preserve
+        follow: true
+
+
+    - name: Start cups service
+      become: true
+      ansible.builtin.service:
+        enabled: true
+        name: cups
+
+
+        # Cups helper service
+    - name: Create a cups helper script directory
+      become: true
+      ansible.builtin.file:
+        path: /usr/local/cups/
+        state: directory
+        mode: '0777'
+        force: true
+
+    - name: Install cups restart helper script
+      ansible.builtin.copy:
+        src: resources/services/cupsrestartservice/script/enable_cups_printers.sh
+        dest: /usr/local/cups/
+        mode: +x
+
+        force: true
+
+    - name: Install cups restart helper service. Copy service files
+      become: true
+      ansible.builtin.copy:
+        src: resources/services/cupsrestartservice/cups.enable.printers.service
+        dest: /etc/systemd/system/
+        mode: "744"
+        force: true
+
+    - name: Install cups restart helper service. Copy service files
+      become: true
+      ansible.builtin.copy:
+        src: resources/services/cupsrestartservice/cups.enable.printers.timer
+        dest: /etc/systemd/system/
+        mode: "744"
+        force: true
+
+    - name: Enable and start Cups helper service
+      become: true
+      ansible.builtin.service:
+        name: cups.enable.printers.timer
+        enabled: true
+        state: started
+
+    - name: Cups enable admin from web
+      become: true
+      ansible.builtin.command: cupsctl --remote-admin --remote-any --share-printers
+
+    - name: Enable admin control in web interface
+      become: true
+      ansible.builtin.user:
+        groups:
+          - lpadmin
+        append: true
+        name: james
+
+    - name: Restart cups
+      become: true
+      ansible.builtin.service:
+        name: cups.service
+        state: restarted
+

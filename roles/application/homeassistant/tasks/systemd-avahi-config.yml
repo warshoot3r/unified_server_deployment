@@ -1,0 +1,22 @@
+    - name: Disable Systemd-resolved MulticastDNS
+      become: true
+      ansible.builtin.replace:
+        path: /etc/systemd/resolved.conf
+        regexp: (.MulticastDNS=.*)
+        replace: MulticastDNS=yes
+
+    - name: Install avahi
+      become: true
+      ansible.builtin.apt:
+        name:
+          - avahi-daemon
+        state: present
+
+    - name: Restart Systemd-resolved and avahi
+      become: true
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - Systemd-resolved
+        - avahi-daemon

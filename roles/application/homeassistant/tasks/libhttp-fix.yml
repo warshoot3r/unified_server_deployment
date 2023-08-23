@@ -1,0 +1,9 @@
+    - name: Copy custom libhttp
+      ansible.builtin.copy:
+        src: libmicrohttpd12_0.9.75-6_arm64.deb
+        dest: /tmp
+
+    - name: Install compiled libhttpd fix
+      become: true
+      ansible.builtin.apt:
+        deb: "/tmp/libmicrohttpd12_0.9.75-6_arm64.deb"
