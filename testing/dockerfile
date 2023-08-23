@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-
+RUN systemctl enable ssh && systemctl start ssh
 # Copy your Ansible code into the container
 COPY . /ansible
 WORKDIR /ansible
