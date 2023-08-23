@@ -1,21 +1,23 @@
-    # network configuration
+---
+- name: Configure Network with VLANs
+  hosts: your_hosts
+  become: true
+
+  tasks:
     - name: Install network manager
-      become: true
       ansible.builtin.apt:
         name: network-manager
         state: present
         update_cache: yes
 
     - name: Enable & Start Network manager service
-      become: true
       ansible.builtin.service:
         name: NetworkManager
         enabled: true
         state: started
       when: not skip_wifi_config_role
-# configure network last incase anciblen loses connection
+
     - name: Configure network
-      become: true
       community.general.nmcli:
         state: present
         conn_name: eth0
@@ -23,41 +25,15 @@
         type: ethernet
         method6: "disabled"
       when: not skip_wifi_config_role
-    - name: Create VLAN 20
-      become: true
-      community.general.nmcli:
-        type: vlan
-        conn_name: eth0.20
-        vlandev: eth0
-        vlanid: 20
-        state: present
-        method6: "disabled"
-        mac: stable
-      when:  (item == "VLAN20") or (not skip_wifi_config_role)
-      with_items: "{{ enabled_vlans }}"
-      
-    - name: Create VLAN 30
-      become: true
-      community.general.nmcli:
-        type: vlan
-        conn_name: eth0.30
-        vlandev: eth0
-        vlanid: 30
-        state: present
-        method6: "disabled"
-        mac: stable
-      when:  (item == "VLAN30") or (not skip_wifi_config_role)
-      with_items: "{{ enabled_vlans }}" 
 
-    - name: Create VLAN 70
-      become: true
+    - name: Create VLANs
       community.general.nmcli:
         type: vlan
-        conn_name: eth0.70
+        conn_name: "eth0.{{ item }}"
         vlandev: eth0
-        vlanid: 70
+        vlanid: "{{ item }}"
         state: present
         method6: "disabled"
         mac: stable
-      when:  (item == "VLAN70") or (not skip_wifi_config_role)
-      with_items: "{{ enabled_vlans }}" 
+      when: (item in enabled_vlans) or (not skip_wifi_config_role)
+      loop: "{{ enabled_vlans }}"
