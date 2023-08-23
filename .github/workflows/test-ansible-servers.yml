@@ -25,7 +25,7 @@ jobs:
           run: docker build -t ansible-test-instance testing/.
 
         - name: Start Docker Container
-          run: docker run -d --name ansible-test-instance ansible-test-container
+          run: docker run -d --name ansible-test-instance
   
 
         - name: Wait for Container to Be Up and Running
@@ -33,8 +33,7 @@ jobs:
             
         - name: Run Tests on built docker image
           run: |
-            export ANSIBLE_CONFIG=roles
-            ansible-playbook servers/piscrape/playbook.yml --inventory "localhost," --extra-vars "container_name=ansible-test-instance"
+            ansible-playbook servers/piscrape/playbook.yml --roles_path=roles --inventory "localhost," --extra-vars "container_name=ansible-test-instance"
         
         - name: Stop and Remove Docker Container
           run: docker stop ansible-test-instance && docker rm ansible-test-instance
