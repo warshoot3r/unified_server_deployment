@@ -14,17 +14,22 @@
 #     state: present
 #     pull: true
 #   when: docker_compose_files | length > 1
-    - name: Copy Docker Compose files to server
-      ansible.builtin.copy:
-        src: "{{ role_path }}/files/{{ item }}"
-        dest: "/home/{{ ansible_user }}/docker-src/"
-      loop: "{{  docker_compose_files }}"
+- name: Copy Docker Compose files to server
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "/home/{{ ansible_user }}/docker-src/"
+    mode: '0644'
+  loop: "{{  docker_compose_files }}"
 
-    - name: Create and start services
-      community.docker.docker_compose:
-        project_src: /home/{{ ansible_user }}/docker-src/
-      register: output
+- name: Create and start services
+  community.docker.docker_compose:
+    project_src: /home/{{ ansible_user }}/docker-src/
+    files:
+      "{{  docker_compose_files }}"
+    pull: true
+    state: present
+  register: output
 
-    - name: Show results
-      ansible.builtin.debug:
-        var: output
+- name: Show results
+  ansible.builtin.debug:
+    var: output
