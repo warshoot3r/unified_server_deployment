@@ -13,6 +13,10 @@ jobs:
         ansible-playbook:
           - servers/pi-node1/playbook.yml 
           - servers/pihole2/playbook.yml
+          - servers/garageprintserver/playbook.yml
+          - servers/piscrape/playbook.yml
+          - servers/unificontroller/playbook.yml
+          - servers/homebridge/playbook.yml
     steps:
         - name: Checkout
           uses: actions/checkout@v3
