@@ -11,13 +11,6 @@
         - gnupg
         - lsb-release
 
-    - name: Add Docker GPG key
-      become: true
-      ansible.builtin.apt_key:
-        url: https://download.docker.com/linux/raspbian/gpg
-        keyring: /usr/share/keyrings/docker-archive-keyring.gpg
-        state: present
-
     - name: Get OS release name
       ansible.builtin.command: "lsb_release -cs"
       changed_when: false
@@ -34,7 +27,7 @@
         repo: >-
          deb [arch={{ sys_arch.stdout }}
          signed-by=/usr/share/keyrings/docker-archive-keyring.gpg]
-         https://download.docker.com/linux/raspbian {{ lsb_rel.stdout }}
+         https://download.docker.com/linux/debian {{ lsb_rel.stdout }}
          stable
         state: present
 
