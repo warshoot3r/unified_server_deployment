@@ -5,7 +5,7 @@
 - name: Debug docker_compose_files variable
   debug:
     var: docker_compose_files
-    
+
 - name: Copy Docker Compose files to server
   ansible.builtin.copy:
     src: "{{ role_path }}/files"
@@ -19,5 +19,5 @@
     files:
       - "{{ docker_compose_files }}"
     state: present
-    when: docker_compose_files | length > 0
+  when: docker_compose_files | length > 0
 
