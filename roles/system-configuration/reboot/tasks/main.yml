@@ -1,4 +1,9 @@
-    - name: Restart machine
-      become: true
-      ansible.builtin.reboot:
-        msg: Reboot initiated by Ansible
+- name: Check if the host is a container
+  command: docker info
+  register: docker_info
+  ignore_errors: true
+
+- name: Restart real machine
+  ansible.builtin.reboot:
+    msg: "Reboot initiated by Ansible. System will be restarted."
+  when: docker_info.rc != 0  # If the host is not a container
