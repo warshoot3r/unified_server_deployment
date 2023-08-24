@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      matrix:
+        ansible-playbook:
+          - servers/pi-node1/playbook.yml 
+          - servers/pihole2/playbook.yml
     steps:
         - name: Checkout
           uses: actions/checkout@v3
@@ -58,7 +62,7 @@ jobs:
         - name: Run Tests on built docker image
           run: |
             export ANSIBLE_CONFIG="testing/ansible_test.cfg" &&
-            ansible-playbook servers/pi-node1/playbook.yml --inventory "testing/inventory.yml" -e "@testing/variables.yml" -v
+            ansible-playbook ${{ matrix.ansible-playbook }} --inventory "testing/inventory.yml" -e "@testing/variables.yml" -v
         
         - name: Stop and Remove Docker Container
-          run: docker stop ansible-test-instance && docker rm ansible-test-instance
+          run: docker-compose -f testing/docker-compose.yml down
