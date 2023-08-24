@@ -8,8 +8,8 @@
     server_service_username: "james" # Service account name
     ansible_user: "root"
     enabled_vlans: # Enabled VLANS
-      - VLAN30
-      - VLAN70
+      - 30
+      - 70
     compose_files: # For docker-compose-apps
       - doods-docker-compose.yml
   roles: 
