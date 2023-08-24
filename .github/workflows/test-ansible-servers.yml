@@ -17,7 +17,7 @@ jobs:
           uses: actions/cache@v2
           with:
             path: /var/cache/apt/archives
-            key: apt-packages-${{ runner.os }}-${{ hashFiles('**/apt-packages-lock') }}
+            key: apt-packages-${{ runner.os }}-${{ hashFiles('testing/dockerfile') }}
             restore-keys: |
               apt-packages-${{ runner.os }}-
         
