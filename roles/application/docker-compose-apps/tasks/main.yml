@@ -7,11 +7,10 @@
 
 
 - name: Combine Docker Compose files
-  block:
-    - community.general.docker_compose:
+  community.general.docker_compose:
           project_src: "/home/{{ ansible_user }}" # Path to your project directory containing the Docker Compose files
           files:
-            - "/home/{{ ansible_user }}/{{ docker_compose_files }}"
+            - "{{ docker_compose_files }}"
           state: present
-      when: docker_compose_files | length > 0
-        
+          when: docker_compose_files | length > 0
+      
