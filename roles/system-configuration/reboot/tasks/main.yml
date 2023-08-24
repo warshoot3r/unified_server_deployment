@@ -1,7 +1,7 @@
 - name: Check if machine is a container
   debug:
     var: ansible_virtualization_type
-  register: is_container.rc
+  register: is_container
 
 - name: Restart real machine
   ansible.builtin.reboot:
