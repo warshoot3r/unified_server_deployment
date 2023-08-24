@@ -29,5 +29,5 @@
     state: present
     method6: "disabled"
     mac: stable
-  when: (not skip_wifi_config_role) and (enabled_vlans | length > 0)
+    when: (not skip_wifi_config_role) and (enabled_vlans is defined and enabled_vlans | length > 0)
   loop: "{{ enabled_vlans }}"
