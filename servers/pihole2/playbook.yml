@@ -1,5 +1,5 @@
 # code: language=ansible
-- hosts: pihole2.local
+- hosts: all 
   name: Install Pi Hole 2
   vars:
     server_hostname: "pihole2" # Variable for renaming server, github key.

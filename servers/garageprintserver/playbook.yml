@@ -1,5 +1,5 @@
 # code: language=ansible
-- hosts: garageprinterserver.local
+- hosts: all
   name: Install Garageprinterserver
   vars:
     server_hostname: "garageprinterserver" # Variable for renaming server, github key. 

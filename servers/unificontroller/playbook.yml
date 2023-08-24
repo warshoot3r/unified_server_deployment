@@ -1,5 +1,5 @@
 # code: language=ansible
-- hosts: homebridge.local
+- hosts: all
   name: Install homebridge
   vars:
     server_hostname: "homebridge" # Variable for renaming server, github key.

@@ -1,4 +1,4 @@
-- hosts: piscrape.local
+- hosts: all
   name: Install PiScrape
   vars:
     server_hostname: "piscrape" # Variable for renaming server, github key. 
