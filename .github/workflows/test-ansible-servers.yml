@@ -36,7 +36,7 @@ jobs:
         - name: set up host ssh
           run: |
             mkdir -p ~/.ssh
-            cp testing/id_rsa ~/.ssh/id_rsa
+            cp testing/debian-bullseye/id_rsa  ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
               
         - name: Install Ansible
