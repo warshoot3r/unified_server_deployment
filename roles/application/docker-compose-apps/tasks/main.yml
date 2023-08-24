@@ -13,5 +13,5 @@
           files:
             - "{{ docker_compose_files }}"
           state: present
-          when: docker_compose_files | length > 0
+      when: docker_compose_files | length > 0
         
