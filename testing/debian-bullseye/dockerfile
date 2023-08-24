@@ -16,7 +16,7 @@ COPY id_rsa.pub /root/.ssh/authorized_keys
 # Permit root login via SSH and listen to all IP addresses
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -i 's/#ListenAddress 0.0.0.0/ListenAddress 0.0.0.0/' /etc/ssh/sshd_config
-
+RUN pip install docker
 # Expose SSH port
 EXPOSE 22
 
