@@ -67,7 +67,7 @@ jobs:
         - name: Run Tests on built docker image
           run: |
             export ANSIBLE_CONFIG="testing/ubuntu-latest/ansible_test.cfg" &&
-            ansible-playbook ${{ matrix.ansible-playbook }} --inventory "testing/ubuntu-latest/inventory.yml" -e "@testing/ubuntu-latest/variables.yml" -v
+            ansible-playbook ${{ matrix.ansible-playbook }} --inventory "testing/ubuntu-latest/inventory.yml" --limit all -e "@testing/ubuntu-latest/variables.yml" -v
         
         - name: Stop and Remove Docker Container
           run: docker-compose -f testing/ubuntu-latest/docker-compose.yml down

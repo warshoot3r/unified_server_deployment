@@ -67,7 +67,7 @@ jobs:
         - name: Run Tests on built docker image
           run: |
             export ANSIBLE_CONFIG="testing/debian-bullseye/ansible_test.cfg" &&
-            ansible-playbook ${{ matrix.ansible-playbook }} --inventory "testing/debian-bullseye/inventory.yml" -e "@testing/debian-bullseye/variables.yml" -v
+            ansible-playbook ${{ matrix.ansible-playbook }} --inventory "testing/debian-bullseye/inventory.yml" --limit all -e "@testing/debian-bullseye/variables.yml" -v
         
         - name: Stop and Remove Docker Container
           run: docker-compose -f testing/debian-bullseye/docker-compose.yml down
