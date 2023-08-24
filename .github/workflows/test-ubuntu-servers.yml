@@ -29,7 +29,6 @@ jobs:
             key: apt-packages-${{ runner.os }}-${{ hashFiles('testing/ubuntu-latest/dockerfile') }}
             restore-keys: |
               apt-packages-${{ runner.os }}-${{ hashFiles('testing/ubuntu-latest/dockerfile') }}
-              apt-packages-${{ runner.os }}-
         
         - name: Generate SSH key pair
           run: ssh-keygen -t rsa -b 4096 -f testing/ubuntu-latest/id_rsa -N ""
