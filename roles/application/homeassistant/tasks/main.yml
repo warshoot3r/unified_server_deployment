@@ -4,6 +4,7 @@
   include_tasks: libhttp-fix.yml
 - name: Install Supervisor Os Agent
   include_tasks: install-osagent.yml
+  when: not skip_wifi_config_role
 - name: Install Homea Assistant
   include_tasks: install-homeassistant.yml
 - name: Configure Avahi and Multicast DNS
