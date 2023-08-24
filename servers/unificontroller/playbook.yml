@@ -2,7 +2,7 @@
 - hosts: homebridge.local
   name: Install homebridge
   vars:
-    server_hostname: "homebridge" # Variable for renaming server, github key. 
+    server_hostname: "homebridge" # Variable for renaming server, github key.
     server_service_username: "james" # Service account name
     enabled_vlans: # Enabled VLANS
       - VLAN30
@@ -10,7 +10,7 @@
     docker_compose_files:
       - unificontroller-docker-compose.yml
       - cloudflared-pihole-docker-compose.yml
-  roles: 
+  roles:
     - system-configuration/github-deploy-key
     - system-configuration/use-github-key-for-ssh
     - application/docker
