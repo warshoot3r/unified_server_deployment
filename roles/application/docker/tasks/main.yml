@@ -21,11 +21,11 @@
       ansible.builtin.command: dpkg --print-architecture
       register: sys_arch
 
-    - name: Add docker repository to apt
+    - name: "Add docker repository to apt"
       become: true
       ansible.builtin.apt_repository:
         repo: >-
-          deb [arch={{ sys_arch.stdout }}
+          deb [arch={{ sys_arch.stdout }}]
           signed-by=/usr/share/keyrings/docker-archive-keyring.gpg]
           https://download.docker.com/linux/{{ apt-dist-os | default('raspbian') }} {{ lsb_rel.stdout }}
           stable
