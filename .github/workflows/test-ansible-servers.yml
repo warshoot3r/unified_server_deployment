@@ -1,4 +1,4 @@
-name: "Automatic - Build and push multi tag as branch name"
+name: "Testing Debian Bullseye - Set up servers"
 
 on:
   push:
