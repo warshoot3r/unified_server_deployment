@@ -19,6 +19,7 @@ jobs:
             path: /var/cache/apt/archives
             key: apt-packages-${{ runner.os }}-${{ hashFiles('testing/dockerfile') }}
             restore-keys: |
+              apt-packages-${{ runner.os }}-${{ hashFiles('testing/dockerfile') }}
               apt-packages-${{ runner.os }}-
         
         - name: Generate SSH key pair
