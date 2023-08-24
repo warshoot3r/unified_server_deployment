@@ -2,11 +2,11 @@
 - hosts: pihole2.local
   name: Install Pi Hole 2
   vars:
-    server_hostname: "pihole2" # Variable for renaming server, github key. 
+    server_hostname: "pihole2" # Variable for renaming server, github key.
     server_service_username: "james" # Service account name
     docker_compose_files:
       - roles/application/docker-compose-apps/files/cloudflared-pihole-docker-compose.yml
-  roles: 
+  roles:
     - system-configuration/github-deploy-key
     - system-configuration/use-github-key-for-ssh
     - application/docker-compose-apps
