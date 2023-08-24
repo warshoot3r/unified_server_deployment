@@ -25,13 +25,13 @@ jobs:
           uses: actions/cache@v2
           with:
             path: /var/cache/apt/archives
-            key: apt-packages-${{ runner.os }}-${{ hashFiles('testing/dockerfile') }}
+            key: apt-packages-${{ runner.os }}-${{ hashFiles('testing/debian-bullseye/dockerfile') }}
             restore-keys: |
-              apt-packages-${{ runner.os }}-${{ hashFiles('testing/dockerfile') }}
+              apt-packages-${{ runner.os }}-${{ hashFiles('testing/debian-bullseye/dockerfile') }}
               apt-packages-${{ runner.os }}-
         
         - name: Generate SSH key pair
-          run: ssh-keygen -t rsa -b 4096 -f testing/id_rsa -N ""
+          run: ssh-keygen -t rsa -b 4096 -f testing/debian-bullseye/id_rsa -N ""
 
         - name: set up host ssh
           run: |
@@ -48,7 +48,7 @@ jobs:
         - name: Build and Load ansible test instance
           uses: docker/build-push-action@v4
           with:
-            context: testing/.
+            context: testing/debian-bullseye/.
             push: false
             load: true
             tags: "ansible-test-instance"
@@ -60,13 +60,13 @@ jobs:
 
 
         - name: Start Docker Container
-          run: docker-compose -f testing/docker-compose.yml up -d
+          run: docker-compose -f testing/debian-bullseye/docker-compose.yml up -d
 
 
         - name: Run Tests on built docker image
           run: |
             export ANSIBLE_CONFIG="testing/ansible_test.cfg" &&
-            ansible-playbook ${{ matrix.ansible-playbook }} --inventory "testing/inventory.yml" -e "@testing/variables.yml" -v
+            ansible-playbook ${{ matrix.ansible-playbook }} --inventory "testing/debian-bullseye/inventory.yml" -e "@testing/debian-bullseye/variables.yml" -v
         
         - name: Stop and Remove Docker Container
-          run: docker-compose -f testing/docker-compose.yml down
+          run: docker-compose -f testing/debian-bullseye/docker-compose.yml down
