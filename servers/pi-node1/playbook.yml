@@ -10,8 +10,8 @@
     enabled_vlans: # Enabled VLANS
       - 30
       - 70
-    compose_files: # For docker-compose-apps
-      - roles/application/docker-compose-apps/files/doods-docker-compose.yml
+    docker_compose_files: # For docker-compose-apps
+      - doods-docker-compose.yml
   roles:
     - system-configuration/github-deploy-key
     - system-configuration/use-github-key-for-ssh
