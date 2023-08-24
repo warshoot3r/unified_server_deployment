@@ -5,8 +5,8 @@
     server_hostname: "homebridge" # Variable for renaming server, github key.
     server_service_username: "james" # Service account name
     enabled_vlans: # Enabled VLANS
-      - VLAN30
-      - VLAN70
+      - 30
+      - 70
     docker_compose_files:
       - unificontroller-docker-compose.yml
       - cloudflared-pihole-docker-compose.yml
