@@ -18,12 +18,4 @@ services:
       - "2222:22"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    command: 
-      - bash
-      - -c
-      - |
-        #!/bin/bash
-        dockerd &
-        sleep 5
-        # Your additional setup and commands here
-        tail -f /dev/null
+    command: ["/bin/bash", "-c", "service ssh start && dockerd & wait"]
