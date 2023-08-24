@@ -9,7 +9,7 @@ networks:
 services:
   ansible-test-instance:
     container_name: ansible-test-instance
-    image: ansible-test-instance
+    image: ansible-test-instance:latest
     init: true
     networks:
       my_network:

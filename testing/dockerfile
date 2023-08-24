@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 # Use an appropriate base image
 FROM debian:bullseye-backports
 
