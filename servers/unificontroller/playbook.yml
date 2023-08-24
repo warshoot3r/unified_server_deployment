@@ -19,4 +19,4 @@
     - system-configuration/hostname-rename
     - system-configuration/update
     - application/docker-compose-apps
-    - applicaiton/unificontroller
+    - application/unificontroller
