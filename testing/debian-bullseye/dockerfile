@@ -4,7 +4,7 @@ FROM debian:bullseye-backports
 
 # Install OpenSSH server and create SSH directory
 RUN apt-get update && \
-    apt-get install -y openssh-server python3 python3-pip && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y openssh-server python3 python3-pip && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir /var/run/sshd && \
     mkdir -p /root/.ssh && \
@@ -16,7 +16,11 @@ COPY id_rsa.pub /root/.ssh/authorized_keys
 # Permit root login via SSH and listen to all IP addresses
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -i 's/#ListenAddress 0.0.0.0/ListenAddress 0.0.0.0/' /etc/ssh/sshd_config
-RUN pip install docker
+
+# Install Docker inside the container
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y docker.io
+
 # Expose SSH port
 EXPOSE 22
 
