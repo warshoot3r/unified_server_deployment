@@ -33,7 +33,8 @@
 - name: Create password file
   copy:
     content: "{{ random_password }}"
-    dest: "/home/{{ ansible_user }}/docker-src/"
+    dest: "/home/{{ ansible_user }}/docker-src/.pihole_web_password"
+    mode: '0644'
   when: "'cloudflared-pihole-docker-compose.yml' in docker_compose_files"
 
 
