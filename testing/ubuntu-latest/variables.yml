@@ -3,4 +3,4 @@ skip_wifi_config_role: true
 github_token: "fdgas" 
 wifi_ssid: "sdfg"
 wifi_password: "rsdfg"
-apt-dist-os: ubuntu
+apt_dist_os: ubuntu
