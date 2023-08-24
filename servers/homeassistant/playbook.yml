@@ -9,7 +9,7 @@
       - VLAN30
       - VLAN70
     compose_files: # For docker-compose-apps
-      - doods-docker-compose.yml
+      - roles/application/docker-compose-apps/files/doods-docker-compose.yml
   roles: 
     - system-configuration/github-deploy-key
     - system-configuration/use-github-key-for-ssh
@@ -20,4 +20,4 @@
     - system-configuration/network/dhcp
     - system-configuration/hostname-rename
     - system-configuration/update/raspi4
-    - applications/docker-compose-apps
+    - application/docker-compose-apps
