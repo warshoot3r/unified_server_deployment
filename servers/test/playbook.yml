@@ -1,0 +1,15 @@
+# code: language=ansible
+- hosts: all
+  name: test
+  vars:
+    server_hostname: "test" # Variable for renaming server, github key.
+    server_service_username: "james"
+    ansible_user: james # Service account name
+    docker_compose_files:
+      - alpine-docker-compose.yml
+      - redis-docker-compose.yml
+    enabled_vlans: false
+  roles:
+    - application/docker-compose-apps
+
+
