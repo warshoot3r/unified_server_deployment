@@ -2,7 +2,7 @@
     - name: Copy Camera Streamer files
       ansible.builtin.copy:
         src: camera-streamer
-        dst: /tmp/camera-streamer
+        dest: /tmp/camera-streamer
         recurse: true
 
     - name: Install Camera streamer

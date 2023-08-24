@@ -1,4 +1,11 @@
-
+- name: Debug role_path variable
+  debug:
+    var: role_path
+    
+- name: Debug docker_compose_files variable
+  debug:
+    var: docker_compose_files
+    
 - name: Copy Docker Compose files to server
   ansible.builtin.copy:
     src: "{{ role_path }}/files"
@@ -8,9 +15,9 @@
 
 - name: Combine Docker Compose files
   community.general.docker_compose:
-          project_src: "/home/{{ ansible_user }}" # Path to your project directory containing the Docker Compose files
-          files:
-            - "{{ docker_compose_files }}"
-          state: present
-          when: docker_compose_files | length > 0
-      
+    project_src: "/home/{{ ansible_user }}" # Path to your project directory containing the Docker Compose files
+    files:
+      - "{{ docker_compose_files }}"
+    state: present
+    when: docker_compose_files | length > 0
+
