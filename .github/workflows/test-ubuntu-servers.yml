@@ -1,0 +1,72 @@
+name: "Testing Ubuntu - Set up servers"
+
+on:
+  push:
+    paths-ignore: 
+      - ".github"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ansible-playbook:
+          - servers/pi-node1/playbook.yml 
+          - servers/pihole2/playbook.yml
+          - servers/garageprintserver/playbook.yml
+          - servers/piscrape/playbook.yml
+          - servers/unificontroller/playbook.yml
+          - servers/homebridge/playbook.yml
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+
+        - name: Cache APT Packages
+          uses: actions/cache@v2
+          with:
+            path: /var/cache/apt/archives
+            key: apt-packages-${{ runner.os }}-${{ hashFiles('testing/ubuntu-latest/dockerfile') }}
+            restore-keys: |
+              apt-packages-${{ runner.os }}-${{ hashFiles('testing/ubuntu-latest/dockerfile') }}
+              apt-packages-${{ runner.os }}-
+        
+        - name: Generate SSH key pair
+          run: ssh-keygen -t rsa -b 4096 -f testing/ubuntu-latest/id_rsa -N ""
+
+        - name: set up host ssh
+          run: |
+            mkdir -p ~/.ssh
+            cp testing/ubuntu-latest/id_rsa  ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+              
+        - name: Install Ansible
+          run: sudo apt-get update && sudo apt-get install -y ansible
+
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v2
+      
+        - name: Build and Load ansible test instance
+          uses: docker/build-push-action@v4
+          with:
+            context: testing/ubuntu-latest/.
+            push: false
+            load: true
+            tags: "ansible-test-instance"
+            build-args: |
+              DOCKER_BUILDKIT=1
+              PIP_CACHE_DIR=/root/.cache/pip
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+
+
+        - name: Start Docker Container
+          run: docker-compose -f testing/ubuntu-latest/docker-compose.yml up -d
+
+
+        - name: Run Tests on built docker image
+          run: |
+            export ANSIBLE_CONFIG="testing/ansible_test.cfg" &&
+            ansible-playbook ${{ matrix.ansible-playbook }} --inventory "testing/ubuntu-latest/inventory.yml" -e "@testing/ubuntu-latest/variables.yml" -v
+        
+        - name: Stop and Remove Docker Container
+          run: docker-compose -f testing/ubuntu-latest/docker-compose.yml down
