@@ -80,6 +80,7 @@
     - name: Cups enable admin from web
       become: true
       ansible.builtin.command: cupsctl --remote-admin --remote-any --share-printers
+      when: not skip_service_startup
 
     - name: Enable admin control in web interface
       become: true
@@ -95,4 +96,4 @@
         name: cups.service
         state: restarted
       when: not skip_service_startup
-
+  
