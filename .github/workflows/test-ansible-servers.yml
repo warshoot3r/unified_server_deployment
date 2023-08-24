@@ -4,13 +4,15 @@ on:
   push:
     paths-ignore: 
       - ".github"
-
 jobs:
-  cache-apt-packages:
-        name: Cache APT Packages
-        runs-on: ubuntu-latest
-    
-        steps:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+
         - name: Cache APT Packages
           uses: actions/cache@v2
           with:
@@ -18,16 +20,7 @@ jobs:
             key: apt-packages-${{ runner.os }}-${{ hashFiles('apt-packages-lock') }}
             restore-keys: |
               apt-packages-${{ runner.os }}-
-    
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-    needs: cache-apt-packages  # Make sure this job runs first
-    steps:
-        - name: Checkout
-          uses: actions/checkout@v3
-
+        
         - name: Generate SSH key pair
           run: ssh-keygen -t rsa -b 4096 -f testing/id_rsa -N ""
 
@@ -51,6 +44,20 @@ jobs:
       
         - name: Build Docker Image
           run: docker build -t ansible-test-instance testing/. 
+
+        - name: Build and push ARM64/v8 image
+          uses: docker/build-push-action@v4
+          with:
+            context: testing/.
+            push: false
+            load: true
+            tags: "ansible-test-instance"
+            build-args: |
+              DOCKER_BUILDKIT=1
+              PIP_CACHE_DIR=/root/.cache/pip
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+
 
         - name: Start Docker Container
           run: docker-compose -f testing/docker-compose.yml up -d
