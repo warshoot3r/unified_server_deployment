@@ -34,11 +34,12 @@
       become: true
       ansible.builtin.apt_repository:
         repo: >-
-         deb [arch={{ sys_arch.stdout }}
-         signed-by=/usr/share/keyrings/docker-archive-keyring.gpg]
-         https://download.docker.com/linux/debian {{ lsb_rel.stdout }}
-         stable
+          deb [arch={{ sys_arch.stdout }}
+          signed-by=/usr/share/keyrings/docker-archive-keyring.gpg]
+          https://download.docker.com/linux/{{ apt_dist_os | default('raspbian') }} {{ lsb_rel.stdout }}
+          stable
         state: present
+
 
     - name: Run apt update
       become: true
