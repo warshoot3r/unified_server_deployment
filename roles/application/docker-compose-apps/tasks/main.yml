@@ -1,7 +1,7 @@
 
 - name: Copy Docker Compose files to server
   ansible.builtin.copy:
-    src: "{{ roles_path }}/files"
+    src: "{{ role_path }}/files"
     dest: "/home/{{ ansible_user }}"
     mode: "0644"
 
