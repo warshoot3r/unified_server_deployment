@@ -4,7 +4,7 @@
 - hosts: all
   name: Install Home assistant
   vars:
-    server_hostname: "pi-node1" # Variable for renaming server, github key. 
+    server_hostname: "pi-node1" # Variable for renaming server, github key.
     server_service_username: "james" # Service account name
     ansible_user: "root"
     enabled_vlans: # Enabled VLANS
@@ -12,7 +12,7 @@
       - 70
     compose_files: # For docker-compose-apps
       - doods-docker-compose.yml
-  roles: 
+  roles:
     - system-configuration/github-deploy-key
     - system-configuration/use-github-key-for-ssh
     - application/docker32bit
