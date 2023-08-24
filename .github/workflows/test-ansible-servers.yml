@@ -29,12 +29,6 @@ jobs:
             mkdir -p ~/.ssh
             cp testing/id_rsa ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
-
-        - name: Start SSH agent
-          run: |
-            exec ssh-agent bash
-            eval '$(ssh-agent -s)'
-
               
         - name: Install Ansible
           run: sudo apt-get update && sudo apt-get install -y ansible
