@@ -10,6 +10,6 @@
   community.general.docker_compose:
         project_src: "/home/{{ ansible_user }}" # Path to your project directory containing the Docker Compose files
         files:
-          - "{{ compose_files }}"
+          - "{{ docker_compose_files }}"
         state: present
-        when: compose_files | length > 0
+        when: docker_compose_files | length > 0

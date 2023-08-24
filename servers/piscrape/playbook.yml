@@ -1,10 +1,10 @@
 - hosts: all
   name: Install PiScrape
   vars:
-    server_hostname: "piscrape" # Variable for renaming server, github key. 
+    server_hostname: "piscrape" # Variable for renaming server, github key.
     server_service_username: "james" # Service account name
 
-  roles: 
+  roles:
     - system-configuration/github-deploy-key
     - system-configuration/use-github-key-for-ssh
     - application/docker
@@ -14,4 +14,3 @@
     - system-configuration/update/raspi4
     - application/cargiantscrape
     - system-configuration/network/wifi
-
