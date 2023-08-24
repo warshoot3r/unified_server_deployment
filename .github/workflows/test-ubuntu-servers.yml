@@ -17,6 +17,7 @@ jobs:
           - servers/piscrape/playbook.yml
           - servers/unificontroller/playbook.yml
           - servers/homebridge/playbook.yml
+          - servers/homeassistant/playbook.yml
     steps:
         - name: Checkout
           uses: actions/checkout@v3

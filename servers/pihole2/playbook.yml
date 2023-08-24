@@ -9,7 +9,7 @@
   roles: 
     - system-configuration/github-deploy-key
     - system-configuration/use-github-key-for-ssh
-    - application/cloudflared-pihole-docker-compose.yml
+    - application/docker-compose-apps
     - system-configuration/unattended-upgrades
     - system-configuration/hostname-rename
     - system-configuration/update/raspi4
