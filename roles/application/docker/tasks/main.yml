@@ -20,7 +20,12 @@
       changed_when: false
       ansible.builtin.command: dpkg --print-architecture
       register: sys_arch
-
+    - name: Add Docker GPG key
+      become: true
+      ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/{{ apt_dist_os | default('raspbian') }}/gpg
+        keyring: /usr/share/keyrings/docker-archive-keyring.gpg
+        state: present
     - name: "Add docker repository to apt"
       become: true
       ansible.builtin.apt_repository:
