@@ -3,7 +3,7 @@
   vars:
     server_hostname: "piscrape" # Variable for renaming server, github key.
     server_service_username: "james" # Service account name
-    enabled_vlans: false
+    enabled_vlans:
   roles:
     - system-configuration/github-deploy-key
     - system-configuration/use-github-key-for-ssh

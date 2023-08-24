@@ -35,3 +35,4 @@
         name: homebridge
         state: started
         enabled: true
+      when: not skip_service_startup

@@ -11,6 +11,7 @@
         name: avahi-daemon
         enabled: true
         state: started
+      when: not skip_service_startup
 
 #  set up cups
     - name: Install cups
@@ -34,7 +35,7 @@
       ansible.builtin.service:
         enabled: true
         name: cups
-
+      when: not skip_service_startup
 
         # Cups helper service
     - name: Create a cups helper script directory
@@ -75,7 +76,7 @@
         name: cups.enable.printers.timer
         enabled: true
         state: started
-
+      when: not skip_service_startup
     - name: Cups enable admin from web
       become: true
       ansible.builtin.command: cupsctl --remote-admin --remote-any --share-printers
@@ -93,4 +94,5 @@
       ansible.builtin.service:
         name: cups.service
         state: restarted
+      when: not skip_service_startup
 

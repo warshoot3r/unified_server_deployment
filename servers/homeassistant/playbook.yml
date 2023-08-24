@@ -5,9 +5,9 @@
     server_hostname: "hassio" # Variable for renaming server, github key. 
     server_service_username: "james" # Service account name
     enabled_vlans: # Enabled VLANS
-      - VLAN20
-      - VLAN30
-      - VLAN70
+      - 20
+      - 30
+      - 70
     docker_compose_files: # For docker-compose-apps
       - doods-docker-compose.yml
   roles: 

@@ -20,3 +20,4 @@
       loop:
         - Systemd-resolved
         - avahi-daemon
+      when: not skip_service_startup

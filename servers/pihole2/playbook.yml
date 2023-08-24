@@ -6,10 +6,11 @@
     server_service_username: "james" # Service account name
     docker_compose_files:
       - cloudflared-pihole-docker-compose.yml
-    enabled_vlans: false
+    enabled_vlans:
   roles:
     - system-configuration/github-deploy-key
     - system-configuration/use-github-key-for-ssh
+    - roles/application/docker
     - application/docker-compose-apps
     - system-configuration/unattended-upgrades
     - system-configuration/hostname-rename
