@@ -14,12 +14,29 @@
 #     state: present
 #     pull: true
 #   when: docker_compose_files | length > 1
+
+
+
+
 - name: Copy Docker Compose files to server
   ansible.builtin.copy:
     src: "{{ role_path }}/files/{{ item }}"
     dest: "/home/{{ ansible_user }}/docker-src/"
     mode: '0644'
   loop: "{{  docker_compose_files }}"
+
+  #for pi hole generate a password and put it in
+- name: Generate random password
+  set_fact:
+    random_password: "{{ lookup('password', '/dev/null length=20 chars=ascii_letters,digits,special') }}"
+
+- name: Create password file
+  copy:
+    content: "{{ random_password }}"
+    dest: "/home/{{ ansible_user }}/docker-src/"
+  when: "'cloudflared-pihole-docker-compose.yml' in docker_compose_files"
+
+
 
 - name: Create and start services
   community.docker.docker_compose:
