@@ -1,12 +1,9 @@
 - name: Pull Car Giant scrape project
   ansible.builtin.git:
-        repo: git@github.com:warshoot3r/cargiantscrape.git
+        repo: https://github.com/warshoot3r/cargiantscrape.git
         dest: "/home/{{ ansible_user }}"
         clone: true
         update: true
-        force: true
-        key_file: ~/.ssh/id_github
-        accept_hostkey: true
         version: latest
 
 - name: Docker compose up the Car Giant project
