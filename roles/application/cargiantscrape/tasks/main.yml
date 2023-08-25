@@ -4,7 +4,7 @@
         dest: "/home/{{ ansible_user }}"
         clone: true
         update: true
-        version: latest
+        version: master
 
 - name: Docker compose up the Car Giant project
   community.general.docker_compose:
