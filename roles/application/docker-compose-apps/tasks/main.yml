@@ -14,9 +14,9 @@
 #     state: present
 #     pull: true
 #   when: docker_compose_files | length > 1
-
-
-
+- name: Install docker-compose python package
+  ansible.builtin.pip:
+    name: docker-compose
 
 - name: Copy Docker Compose files to server
   ansible.builtin.copy:
