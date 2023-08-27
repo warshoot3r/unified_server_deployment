@@ -44,7 +44,6 @@
         state: latest
         upgrade: true
         force: true
-        
 
     - name: Restart
       become: true

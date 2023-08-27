@@ -1,8 +1,0 @@
-- hosts: all
-  name: Get throttled
-  tasks:
-    - name: Run vc gencmd get_throttled
-      ansible.builtin.command: vcgencmd get_throttled
-      register: out
-      ansible.builtin.debug: var=out.stdout_lines
-      changed_when: false
