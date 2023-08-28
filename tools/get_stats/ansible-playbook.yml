@@ -1,8 +1,38 @@
+---
 - hosts: all
   name: Get pi stats
   tasks:
-    - name: Run vc gencmd get_throttled
-      ansible.builtin.command: vcgencmd version; vcgencmd get_throttled; vcgencmd measure_volts; vcgencmd measure_temp;vcgencmd measure_clock arm;
-      register: out
-      ansible.builtin.debug: var=out.stdout_lines
+    - name: Run vcgencmd version
+      ansible.builtin.command: vcgencmd version
+      register: version_output
       changed_when: false
+
+    - name: Run vcgencmd get_throttled
+      ansible.builtin.command: vcgencmd get_throttled
+      register: throttled_output
+      changed_when: false
+
+    - name: Run vcgencmd measure_volts
+      ansible.builtin.command: vcgencmd measure_volts
+      register: volts_output
+      changed_when: false
+
+    - name: Run vcgencmd measure_temp
+      ansible.builtin.command: vcgencmd measure_temp
+      register: temp_output
+      changed_when: false
+
+    - name: Run vcgencmd measure_clock arm
+      ansible.builtin.command: vcgencmd measure_clock arm
+      register: clock_output
+      changed_when: false
+
+    - name: Combine results
+      ansible.builtin.set_fact:
+        combined_output: |
+         "{{ version_output.stdout_lines + throttled_output.stdout_lines + volts_output.stdout_lines + temp_output.stdout_lines + clock_output.stdout_lines }}"
+      changed_when: false
+
+    - name: Print combined results
+      ansible.builtin.debug:
+        var: combined_output
