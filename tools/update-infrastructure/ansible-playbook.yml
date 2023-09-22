@@ -9,7 +9,14 @@
         upgrade: true
         cache_valid_time: 86400
 
-    - name: Run docker compose update
+    - name: Pull and run new docker-compose containers
+      when: docker_compose_file_location is defined
+      community.docker.docker_compose:
+        pull: true
+        project_src: "{{ docker_compose_file_location }}"
+        state: present
+
+    - name: Find all docker compose files
       ansible.builtin.command: find /home -name docker-compose.yml
       register: compose_out
       changed_when: false

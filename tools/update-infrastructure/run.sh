@@ -3,8 +3,8 @@ read -p "Preparing to update everything. Update pikvm ? (internet access must be
 
 if [[ "$response" =~ ^[Yy]$ ]]; then
     echo "selected Yes"
-    ansible-playbook -i hosts.yml ansible-playbook.yml $1
+    ansible-playbook -i hosts.yml ansible-playbook.yml $1 -vv
 else
     echo "Updating only linux servers"
 fi
-ansible-playbook -i hosts.yml ansible-playbook.yml -l linuxservers $1
+ansible-playbook -i hosts.yml ansible-playbook.yml -l linuxservers $1 -vv
