@@ -2,11 +2,11 @@
 # template ansible playbook for installing a raspbian 32 bit with docker
 #
 - hosts: all
-  name: Install Home assistant
+  name: Install Pi Node 1 
   vars:
     server_hostname: "pi-node1" # Variable for renaming server, github key.
     server_service_username: "james" # Service account name
-    ansible_user: "root"
+    ansible_user: "james"
     enabled_vlans: # Enabled VLANS
       - 30
       - 70
@@ -15,8 +15,9 @@
   roles:
     - system-configuration/github-deploy-key
     - system-configuration/use-github-key-for-ssh
-    - application/docker32bit
+    - application/docker
     - system-configuration/unattended-upgrades
+    - system-configuration/network/wifi
     - system-configuration/network/dhcp
     - system-configuration/hostname-rename
     - system-configuration/update/raspi4

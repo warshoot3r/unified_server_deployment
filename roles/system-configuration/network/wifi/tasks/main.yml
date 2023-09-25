@@ -1,13 +1,21 @@
-    - name: Create the wifi connection
-      become: true
-      community.general.nmcli:
-        type: wifi
-        conn_name: mainwifi
-        ifname: wlan0
-        ssid: "{{ wifi_ssid }}"
-        wifi_sec:
-          key-mgmt: wpa-psk
-          psk: "{{ wifi_password }}"
-        autoconnect: true
-        state: present
-      when: not skip_wifi_config_role
+- name: Start Network Manager
+  become: true
+  ansible.builtin.service:
+    name: NetworkManager
+    state: started
+
+
+- name: Create the wifi connection
+  become: true
+  community.general.nmcli:
+    type: wifi
+    conn_name: mainwifi
+    ifname: wlan0
+    ssid: "{{ wifi_ssid }}"
+    wifi_sec:
+      key-mgmt: wpa-psk
+      psk: "{{ wifi_password }}"
+    autoconnect: true
+    state: present
+  when: skip_wifi_config_role is not defined
+

@@ -23,7 +23,7 @@
     - name: Add Docker GPG key
       become: true
       ansible.builtin.apt_key:
-        url: https://download.docker.com/linux/{{ apt_dist_os | default('raspbian') }}/gpg
+        url: https://download.docker.com/linux/debian/gpg
         keyring: /usr/share/keyrings/docker-archive-keyring.gpg
         state: present
     - name: "Add docker repository to apt"
@@ -32,7 +32,7 @@
         repo: >-
           deb [arch={{ sys_arch.stdout }}
           signed-by=/usr/share/keyrings/docker-archive-keyring.gpg]
-          https://download.docker.com/linux/{{ apt_dist_os | default('raspbian') }} {{ lsb_rel.stdout }}
+          https://download.docker.com/linux/debian {{ lsb_rel.stdout }}
           stable
         state: present
 
@@ -50,8 +50,8 @@
       loop:
         - docker-ce
         - docker-ce-cli
-        - containerd.io
-        - docker-compose
+        - docker-buildx-plugin 
+        - docker-compose-plugin
 
     - name: Add user to docker group
       become: true
@@ -67,4 +67,4 @@
         name: docker
         enabled: true
         state: started
-      when: not skip_service_startup
+      when: skip_service_startup is not defined

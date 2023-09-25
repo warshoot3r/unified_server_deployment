@@ -5,19 +5,19 @@
         type: ed25519
         state: present
       register: deploy_key
-      when: not skip_deploy_key_roles
+      when: skip_deploy_key_roles is not defined
           # pull github repo for piunifi
     - name: Print deploy key
       ansible.builtin.debug:
         var: deploy_key
-      when: not skip_deploy_key_roles
+      when: skip_deploy_key_roles is not definedgit
     - name: Push deploy key to Github
       community.general.github_deploy_key:
         owner: "warshoot3r"
-        repo: "infraascode"
+        repo: "unified_server_deployment"
         name: "{{ server_hostname }}-Server-Deploy-Key"
         state: present
         key: "{{ deploy_key.public_key }}"
         read_only: true
         token: "{{ github_token }}"
-      when: not skip_deploy_key_roles
+      when: skip_deploy_key_roles is not defined

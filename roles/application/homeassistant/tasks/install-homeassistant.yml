@@ -20,13 +20,13 @@
         - "apparmor=1"
         - "security=apparmor"
         - "systemd.unified_cgroup_hierarchy=0"
-      when: not skip_incompatible_container_install
+      when: skip_incompatible_container_install is not defined
         
     - name: Restart machine
       become: true
       ansible.builtin.reboot:
         msg: Reboot initiated by Ansible
-      when: not skip_incompatible_container_install
+      when: skip_incompatible_container_install is not defined
     - name: Install Home assistant deb
       ansible.builtin.apt:
         deb: "https://github.com/home-assistant/supervised-installer/releases/latest/download/homeassistant-supervised.deb"

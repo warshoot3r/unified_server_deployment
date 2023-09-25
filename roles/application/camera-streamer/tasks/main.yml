@@ -23,4 +23,4 @@
         name: camera-streamer
         state: started
         enabled: true
-      when: not skip_service_startup
+      when: skip_service_startup is not defined

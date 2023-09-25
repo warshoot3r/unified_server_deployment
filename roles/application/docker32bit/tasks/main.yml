@@ -69,4 +69,4 @@
         name: docker
         enabled: true
         state: started
-      when: not skip_service_startup
+      when: skip_service_startup is not defined

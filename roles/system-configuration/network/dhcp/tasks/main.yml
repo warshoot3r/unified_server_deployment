@@ -1,26 +1,30 @@
 - name: Install network manager
+  become: true
   ansible.builtin.apt:
     name: network-manager
     state: present
     update_cache: true
 
 - name: Enable & Start Network manager service
+  become: true
   ansible.builtin.service:
     name: NetworkManager
     enabled: true
     state: started
-  when: not skip_wifi_config_role
+  when: skip_wifi_config_role is not defined
 
 - name: Configure network
+  become: true
   community.general.nmcli:
     state: present
     conn_name: eth0
     ifname: eth0
     type: ethernet
     method6: "disabled"
-  when: not skip_wifi_config_role
+  when: skip_wifi_config_role is not defined
 
 - name: Create VLANs
+  become: true
   community.general.nmcli:
     type: vlan
     conn_name: "eth0.{{ item }}"
@@ -29,5 +33,5 @@
     state: present
     method6: "disabled"
     mac: stable
-  when: (not skip_wifi_config_role) and (enabled_vlans | default([]) | length > 0)
+  when: (skip_wifi_config_role is not defined) and (enabled_vlans | default([]) | length > 0)
   loop: "{{ enabled_vlans }}"

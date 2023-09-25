@@ -1,2 +1,2 @@
 export ANSIBLE_CONFIG="../../ansible.cfg"
-ansible-playbook -i 10.10.70.198, playbook.yml $1
+ansible-playbook -e variables.yml -e @"../../variables.yml" -i 10.10.70.187, playbook.yml $1
